@@ -1,7 +1,7 @@
 import { toast } from "react-hot-toast"
 import { ReportEndpoints } from "services/apis"
 import { apiConnector } from "services/apiConnector";
-const { GetReport_API, GetYearGraph_API } = ReportEndpoints
+const { GetReport_API, GetYearGraph_API,ReportDownload_API } = ReportEndpoints
 
 export const GetYearlyGrapghReport = async () => {
     try {
@@ -18,6 +18,15 @@ export const GetYearlyGrapghReport = async () => {
     }
 };
 
+export const OrderReportDownload = async (start,end) => {
+    try {
+        
+            const response = await apiConnector("GET", `${ReportDownload_API}?startDate=${start}&endDate=${end}&format=csv`);
+            return response?.data
+    } catch (error) {
+        console.log(error, 'error in fetch expense');
+    }
+};
 export const GetBestSellingReport = async () => {
     try {
         

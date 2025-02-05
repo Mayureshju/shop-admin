@@ -45,4 +45,5 @@ export const ExpenseEndpoints = {
 export const ReportEndpoints = {
   GetReport_API : BASE_URL + "/filterreports",
   GetYearGraph_API : BASE_URL + "/yearlygrapgh",
+  ReportDownload_API : BASE_URL + "/filterorderbydate"
 }

@@ -2,20 +2,41 @@
 
 import React, { useState } from "react";
 import { Box, Button, TextField, Stack } from "@mui/material";
-
+import { ReportEndpoints } from "services/apis";
+const { ReportDownload_API } = ReportEndpoints
 export default function OrderDownload() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const handleDownloadCSV = () => {
-    // TODO: Add your CSV download logic here
-    console.log("Downloading CSV for:", startDate, "to", endDate);
+  const handleDownloadCSV = async () => {
+    try {
+      // Build the URL for the API endpoint
+      const url = `${ReportDownload_API}?startDate=${startDate}&endDate=${endDate}&format=csv`;
+      
+      // Fetch the file as a blob
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Failed to download CSV report");
+      }
+      const blob = await response.blob();
+
+      // Create a temporary download URL for the blob
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = `orders_${startDate}_to_${endDate}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      // Optional: revoke the URL after a delay to free memory
+      setTimeout(() => window.URL.revokeObjectURL(downloadUrl), 100);
+    } catch (error) {
+      console.error("Error downloading CSV:", error);
+    }
   };
 
-  const handleDownloadPDF = () => {
-    // TODO: Add your PDF download logic here
-    console.log("Downloading PDF for:", startDate, "to", endDate);
-  };
+ 
 
   return (
     <Box sx={{ p: 4 }}>
@@ -43,9 +64,6 @@ export default function OrderDownload() {
         <Stack spacing={2} direction="row" sx={{ mt: 3 }}>
           <Button variant="contained" color="primary" onClick={handleDownloadCSV}>
             Download CSV
-          </Button>
-          <Button variant="contained" color="secondary" onClick={handleDownloadPDF}>
-            Download PDF
           </Button>
         </Stack>
       )}
