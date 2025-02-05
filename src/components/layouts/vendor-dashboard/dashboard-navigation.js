@@ -63,12 +63,12 @@ export const navigation = [{
   name: "Financial Report",
   icon: duotone.Refund,
   children: [{
-    name: "Reports Download",
+    name: "Reports Analytics",
     path: "/admin/reports-download"
   },
   {
-    name: "Analytics",
-    path: "/admin/refund-request"
+    name: "Order Report Download",
+    path: "/admin/order-download"
   }
 ]
 }, 
