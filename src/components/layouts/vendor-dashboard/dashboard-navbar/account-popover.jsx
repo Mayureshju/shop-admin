@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { signOut } from "next-auth/react";
 
 // MUI
 import Box from "@mui/material/Box";
@@ -81,7 +82,7 @@ export default function AccountPopover() {
         <MenuItem>My Orders</MenuItem>
         <MenuItem>Settings</MenuItem>
         <Divider />
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={()=>{signOut({ redirect: true, callbackUrl: "/" })}}>Logout</MenuItem>
       </Menu>
     </div>;
 }

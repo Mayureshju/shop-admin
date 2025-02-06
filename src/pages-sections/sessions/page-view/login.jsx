@@ -1,5 +1,5 @@
 "use client";
-
+import { signIn } from "next-auth/react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -46,8 +46,21 @@ export default function LoginPageView() {
 
   
 // FORM SUBMIT HANDLER
-  const handleSubmitForm = handleSubmit(values => {
-    alert(JSON.stringify(values, null, 2));
+  const handleSubmitForm = handleSubmit(async(values) => {
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: values.email,
+      password: values.password,
+      callbackUrl: "/vendor/dashboard" // Adjust to your desired redirect URL
+    });
+
+    console.log(result)
+    if (result?.error) {
+      console.error("Login failed:", result.error);
+      // Optionally, display an error message to the user
+    } else {
+      window.location.href = result.url;
+    }
   });
   return <FormProvider methods={methods} onSubmit={handleSubmitForm}>
       <div className="mb-1">

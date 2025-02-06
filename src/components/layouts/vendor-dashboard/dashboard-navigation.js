@@ -1,4 +1,5 @@
 import duotone from "icons/duotone";
+import { signOut } from "next-auth/react";
 export const navigation = [{
   type: "label",
   label: "Admin"
