@@ -3,8 +3,8 @@ import { GET } from "app/api/(category)/fetchallcategory/route";
 import exp from "constants";
 import Search from "icons/Search";
 
-export const BASE_URL = "http://localhost:3000/api";
-
+// export const BASE_URL = "http://localhost:3000/api";
+export const BASE_URL = "https://shop-admin-ashy.vercel.app/api";
 export const CategoryEndpoints = {
   CreateCategory_API : BASE_URL + "/createcategory",
   GetCategoryById_API : BASE_URL + "/getcategorybyid",
